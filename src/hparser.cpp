@@ -144,7 +144,6 @@ HTraits::HObject HParser::get_enum_name(const std::string &line)
     auto begin_index = line.find_first_of("enum");
     begin_index += 4;
     while(line[begin_index] == ' '){
-        std::cout << line[begin_index] << std::endl;
         begin_index++;
     }
     auto raw_name = std::string(line.begin()+begin_index, line.end());
