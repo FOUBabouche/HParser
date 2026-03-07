@@ -71,7 +71,6 @@ HTraits::HObject HParser::get_struct_name(const std::string &line)
     auto begin_index = line.find_first_of("struct");
     begin_index += 6;
     while(line[begin_index] == ' '){
-        std::cout << line[begin_index] << std::endl;
         begin_index++;
     }
     auto raw_name = std::string(line.begin()+begin_index, line.end());
