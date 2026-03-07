@@ -79,7 +79,7 @@ HTraits::HObject HParser::get_struct_name(const std::string &line)
     if(end_index >= raw_name.size()-1){
         end_index = raw_name.find_first_of('{');
     }
-    return {std::string(raw_name.begin(), (end_index >= raw_name.size()-1 ? raw_name.end() : raw_name.begin()+end_index))), {}};
+    return {std::string(raw_name.begin(), (end_index >= raw_name.size()-1 ? raw_name.end() : raw_name.begin()+end_index)), {}};
 }
 
 void HParser::get_struct_member(HTraits::HObject &object, const std::string &line)
@@ -152,7 +152,7 @@ HTraits::HObject HParser::get_enum_name(const std::string &line)
     if(end_index >= raw_name.size()-1){
         end_index = raw_name.find_first_of('{');
     }
-    return {std::string(raw_name.begin(), (end_index >= raw_name.size()-1 ? raw_name.end() : raw_name.begin()+end_index))), {}};
+    return {std::string(raw_name.begin(), (end_index >= raw_name.size()-1 ? raw_name.end() : raw_name.begin()+end_index)), {}};
 }
 
 void HParser::get_enum_member(HTraits::HObject &object, const std::string &line)
