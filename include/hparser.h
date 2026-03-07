@@ -23,6 +23,10 @@ namespace HTraits{
     };
 
     struct HObject{
+        enum Type{
+            Struct,
+            Enum
+        } type;
         std::string name;
         std::vector<HMember> members;
     };

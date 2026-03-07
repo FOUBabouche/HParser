@@ -9,7 +9,7 @@ HParser::HParser(const std::filesystem::path &file_path)
 {
     rules = {
         {LineType::StructDeclaration, std::regex(R"(^\s*struct\s+[A-Za-z0-9_]*\s*\{?\s*$)")},
-        {LineType::StructMemberDeclarion, std::regex(R"(^\s*([A-Za-z_][A-Za-z0-9_]*\s+)*[A-Za-z_][A-Za-z0-9_]*(::[A-Za-z_][A-Za-z0-9_]*)*(<[A-Za-z0-9_,\s]*(::[A-Za-z_][A-Za-z0-9_]*)*>)?\s+[A-Za-z_][A-Za-z0-9_]*\s*(=\s*("[^"]*"|([0-9]*(.[0-9A-Za-z]*)*))\s*)?;\s*$)")},
+        {LineType::StructMemberDeclarion, std::regex(R"(^\s*([A-Za-z_][A-Za-z0-9_]*\s+)*[A-Za-z_][A-Za-z0-9_]*(::[A-Za-z_][A-Za-z0-9_]*)*(<[A-Za-z0-9_,\s]*(::[A-Za-z_][A-Za-z0-9_]*)*>)?(\*)*\s+[A-Za-z_][A-Za-z0-9_]*\s*(=\s*("[^"]*"|([0-9]*(.[0-9A-Za-z]*)*))\s*)?;\s*$)")},
         {LineType::EnumDeclaration, std::regex(R"(^\s*enum\s+[A-Za-z0-9_]*\s*\{?\s*$)")},
         {LineType::EnumMemberDeclaration, std::regex(R"(^\s*[A-Za-z0-9_]+\s*(=\s*[0-9]+)*,?\s*$)")},
         {LineType::EndObject, std::regex(R"(^\s*\}\s*;$)")}
@@ -78,7 +78,7 @@ HTraits::HObject HParser::get_struct_name(const std::string &line)
     if(end_index >= raw_name.size()-1){
         end_index = raw_name.find_first_of('{');
     }
-    return {std::string(raw_name.begin(), (end_index >= raw_name.size()-1 ? raw_name.end() : raw_name.begin()+end_index)), {}};
+    return {HTraits::HObject::Struct, std::string(raw_name.begin(), (end_index >= raw_name.size()-1 ? raw_name.end() : raw_name.begin()+end_index)), {}};
 }
 
 void HParser::get_struct_member(HTraits::HObject &object, const std::string &line)
@@ -150,7 +150,7 @@ HTraits::HObject HParser::get_enum_name(const std::string &line)
     if(end_index >= raw_name.size()-1){
         end_index = raw_name.find_first_of('{');
     }
-    return {std::string(raw_name.begin(), (end_index >= raw_name.size()-1 ? raw_name.end() : raw_name.begin()+end_index)), {}};
+    return {HTraits::HObject::Enum, std::string(raw_name.begin(), (end_index >= raw_name.size()-1 ? raw_name.end() : raw_name.begin()+end_index)), {}};
 }
 
 void HParser::get_enum_member(HTraits::HObject &object, const std::string &line)
