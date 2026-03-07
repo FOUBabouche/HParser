@@ -2,11 +2,11 @@ cmake_minimum_required(VERSION 3.3)
 
 project(HParseur)
 
-set(CMAKE_CXX_STANDARD 23)
+add_library(${PROJECT_NAME})
 
-add_executable(${PROJECT_NAME})
+target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_23)
 
-file(GLOB SOURCES "${CMAKE_SOURCE_DIR}/src/*.cpp")
+file(GLOB SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
 target_sources(${PROJECT_NAME} PRIVATE 
     ${SOURCES}
 )
