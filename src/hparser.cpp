@@ -24,15 +24,15 @@ HParser::HParser(const std::filesystem::path &file_path)
         return;
     }
 
-    std::vector<std::pair<const LineType, std::string>> lines;
+    std::vector<std::pair<LineType, std::string>> lines;
 
     std::string line;
     while(std::getline(file, line)){
-        auto it = std::find_if(rules.begin(), rules.end(), [&line](std::pair<const LineType, std::regex>& rule){
+        auto it = std::find_if(rules.begin(), rules.end(), [&line](const std::pair<const LineType, std::regex>& rule){
             return std::regex_match(line, rule.second);
         });
         if(it == rules.end()) continue;
-        std::pair<const LineType, std::string> good_line = {it->first, line};
+        std::pair<LineType, std::string> good_line = {it->first, line};
         lines.push_back(good_line);
     }
 

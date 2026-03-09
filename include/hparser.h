@@ -1,5 +1,5 @@
-#ifndef __PARSER_H__
-#define __PARSER_H__
+#ifndef PARSER_H
+#define PARSER_H
 
 #include <filesystem>
 #include <unordered_map>
@@ -32,6 +32,13 @@ namespace HTraits{
     };
 }
 
+template <>
+struct std::hash<LineType> {
+    size_t operator()(LineType t) const noexcept {
+        return std::hash<int>{}(static_cast<int>(t));
+    }
+};
+
 class HParser{
     public:
         HParser(const std::filesystem::path& file_path);
@@ -45,7 +52,7 @@ class HParser{
         void get_enum_member(HTraits::HObject& object, const std::string& line);
 
     private:
-        std::unordered_map<const LineType, std::regex> rules;
+        std::unordered_map<LineType, std::regex> rules;
         std::vector<HTraits::HObject> objects;
 };
 
