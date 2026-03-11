@@ -78,7 +78,7 @@ HTraits::HObject HParser::get_struct_name(const std::string &line)
     if(end_index >= raw_name.size()-1){
         end_index = raw_name.find_first_of('{');
     }
-    return {HTraits::HObject::Struct, std::string(raw_name.begin(), (end_index >= raw_name.size()-1 ? raw_name.end() : raw_name.begin()+end_index)), {}};
+    return {HTraits::HObject::Struct, std::string(raw_name.begin(), (end_index > raw_name.size()-1 ? raw_name.end() : raw_name.begin()+end_index)), {}};
 }
 
 void HParser::get_struct_member(HTraits::HObject &object, const std::string &line)
@@ -97,6 +97,9 @@ void HParser::get_struct_member(HTraits::HObject &object, const std::string &lin
         if(character == ';'){
             if(!word.empty()){
                 if(word_type == Value){
+                    while(!std::isdigit(word.back())){
+                        word.pop_back();
+                    }
                     member.value = word;
                 }else if(word_type == Name){
                     member.name = word;
